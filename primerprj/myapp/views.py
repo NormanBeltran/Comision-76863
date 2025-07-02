@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.urls import reverse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import sqlite3
+from .forms import *
 
 # Create your views here.
 
@@ -121,3 +123,76 @@ def bienvenido(request):
 
 def welcome(request):
     return render(request, 'myapp/bienvenido.html')
+
+#___________________________________________
+# 
+
+def bienvenido2(request):
+    ctx = {
+        'nombre': 'Norman',
+        'apellido': 'Beltran',
+        'edad': 48,
+        'cursos': [
+            {'nombre': 'Python', 'inscriptos': 30},
+            {'nombre': 'Django', 'inscriptos': 20},
+            {'nombre': 'React', 'inscriptos': 10},
+            {'nombre': 'HTML', 'inscriptos': 100},
+            {'nombre': 'CSS', 'inscriptos': 110},
+            {'nombre': 'JS', 'inscriptos': 120},
+        ]
+    }
+    return render(request, 'myapp/bienvenido2.html', ctx)    
+
+def unCurso(request, id):
+    conn = sqlite3.connect("curso.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id, nombre, inscriptos FROM cursos WHERE id = ?;", (id,))
+
+    try:
+        (id, nombre, inscriptos) = cursor.fetchone()
+    except:
+        return HttpResponse("Curso no encontrado en la BD")
+        
+    conn.close()
+    ctx = {
+        'id': id,
+        'nombre': nombre,
+        'inscriptos': inscriptos,
+    }
+    return render(request, 'myapp/uncurso.html', ctx)
+
+def cursos_all(request):
+    conn = sqlite3.connect("curso.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, nombre, inscriptos FROM cursos;")
+    cursos =  cursor.fetchall()
+    ctx = {"cursos": cursos}
+    conn.close
+    return render(request, 'myapp/cursos.html', ctx) 
+
+def nuevoCurso(request):
+    if  request.method == "POST":
+        form = FormularioCurso(request.POST)
+        if form.is_valid():
+            #nombre = request.POST.get("nombre")
+            #inscriptos = request.POST.get("inscriptos")
+
+            nombre = form.cleaned_data["nombre"]
+            inscriptos = form.cleaned_data["inscriptos"]
+
+            conn = sqlite3.connect("curso.db")
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO cursos (nombre, inscriptos) VALUES (?, ?);", (nombre, inscriptos))
+            conn.commit()
+            conn.close()
+            return HttpResponseRedirect(reverse("cursos_all"))
+    else:
+        form = FormularioCurso()
+
+    ctx = {'form': form}
+
+    return render(request, 'myapp/nuevo_curso.html', ctx)
+
+#_______
+

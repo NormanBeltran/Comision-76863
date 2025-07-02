@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Curso de Django Python</h1>
+    <h1>EducacionIT</h1>
+    <h2>Prof: {{ nombre }} {{ apellido }}</h2>
+    <h2>Edad: {{ edad }} </h2>
+    <h3>Dias Martes y Jueves</h3>
+
+    <h4>Cursos</h4>
+    
+    {% for curso in  cursos %}
+       
+       {% if curso.inscriptos > 99 %}
+            <p style="color:red"> {{ curso.nombre }} [{{curso.inscriptos}}] </p>
+        {% else %}
+            <p style="color:green"> {{ curso.nombre }} [{{curso.inscriptos}}] </p>
+       {% endif %}        
+       
+    {% endfor %}
+        
+</body>
+</html>

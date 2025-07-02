@@ -1,0 +1,35 @@
+{% extends 'myapp/base.html' %}
+
+
+{% block title %}
+    Todos los cursos
+{% endblock %}
+    
+{% block content %}
+    <h1>Lista de Cursos (usando contexto)</h1>
+    <table style="border:5px solid">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre Curso</th>
+                <th>Inscriptos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for id, nombre, inscriptos  in cursos %}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{nombre}}</td>
+                <td>{{inscriptos}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'bienvenido' %}">Volver a la Bienvenida</a>
+{% endblock %}    
+
+
+
+    
+
