@@ -17,4 +17,8 @@ urlpatterns = [
     path("cursos_all/",   views.cursos_all, name="cursos_all"),
 
     path("nuevo_curso/",   views.nuevoCurso, name="nuevo_curso"),
+
+    path("cursos_orm/",   views.cursos_orm, name="cursos_orm"),
+    path("n_curso_orm/",  views.nuevoCursoORM, name="n_curso_orm"),
+    path("cursos_json/",   views.cursos_json, name="cursos_json"),
 ]

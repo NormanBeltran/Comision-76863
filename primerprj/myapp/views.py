@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import sqlite3
 from .forms import *
+from .models import *
 
 # Create your views here.
 
@@ -119,7 +120,7 @@ def aero_api(request):
 def bienvenido(request):
     with open('myapp/templates/myapp/bienvenido.html') as f:
         html = f.read()
-    return HttpResponse(html)
+    return render(html)
 
 def welcome(request):
     return render(request, 'myapp/bienvenido.html')
@@ -194,5 +195,26 @@ def nuevoCurso(request):
 
     return render(request, 'myapp/nuevo_curso.html', ctx)
 
-#_______
+#___________________________________ ORM
 
+def cursos_orm(request):
+    cursos = Curso.objects.all()
+    ctx = {"cursos": cursos}
+    return render(request, 'myapp/cursos_orm.html', ctx) 
+
+def nuevoCursoORM(request):
+    if  request.method == "POST":
+        form = FormularioCurso(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("cursos_orm"))
+    else:
+        form = FormularioCurso()
+
+    ctx = {'form': form}
+    return render(request, 'myapp/nuevo_curso.html', ctx)
+
+def cursos_json(request):
+    response = JsonResponse(list(Curso.objects.values()), safe=False)
+    
+    return response
