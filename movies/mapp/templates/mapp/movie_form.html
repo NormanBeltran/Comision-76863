@@ -1,0 +1,27 @@
+{% extends 'mapp/base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Crear Películas
+{% endblock title %}
+    
+
+{% block content %}
+<div class="container-fluid bg-secondary my-5">
+    <div class="container">
+        <div class="pb-2">
+            <div class="col-lg-8 py-2 py-lg-2">
+                <form action="" method="post" enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    <table>
+                    {{ form.as_table }}
+                    </table>
+                    <input type="submit" class="btn btn-primary" value="Crear Película">
+                </form>
+            </div>    
+        </div>
+    </div>
+</main>
+{% endblock content %}
+

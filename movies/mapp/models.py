@@ -14,7 +14,7 @@ class Gender(models.Model):
     class Meta:
         verbose_name_plural = "Géneros"
         verbose_name = "Género"
-        ordering = ["id"]
+        ordering = ["name"]
     
 class Company(models.Model):
     name = models.CharField(verbose_name="Compañía", max_length=50)

@@ -1,0 +1,41 @@
+{% extends 'mapp/base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Listado de Compañías Productoras de Películas
+{% endblock title %}
+    
+
+{% block content %}
+<main role="main" class="container">
+    {% if company_list %}      
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Compañía</th>
+        </tr>
+      </thead>    
+      <tbody>
+      {% for company in company_list %}
+          <tr>            
+              <th scope="row">{{ company.id }}</th>
+              <td>{{ company.name }}</td>
+          </tr>           
+      {% endfor %} 
+      </tbody>
+    </table>
+	</div>
+    {% else %}
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{% static 'mapp/img/pochoclos.jpg' %}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Compañía</h5>
+          <p class="card-text">Sin compañías ingresadas en la Base de Datos del sitio, por favor regrese en breve estaremos ingresando información.</p>
+          <a href="{% url 'home' %}" class="btn btn-primary">Inicio</a>
+        </div>
+    </div>
+    {% endif %}
+</main>
+{% endblock content %}

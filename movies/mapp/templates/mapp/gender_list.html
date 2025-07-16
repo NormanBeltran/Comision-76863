@@ -1,0 +1,41 @@
+{% extends 'mapp/base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Listado de Géneros de Películas
+{% endblock title %}
+    
+
+{% block content %}
+<main role="main" class="container">
+    {% if gender_list %}      
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Género</th>
+        </tr>
+      </thead>    
+      <tbody>
+      {% for gender in gender_list %}
+          <tr>            
+              <th scope="row">{{ gender.id }}</th>
+              <td>{{ gender.name }}</td>
+          </tr>           
+      {% endfor %} 
+      </tbody>
+    </table>
+	</div>
+    {% else %}
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{% static 'mapp/img/pochoclos.jpg' %}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Generos</h5>
+          <p class="card-text">Sin generos ingresados en la Base de Datos del sitio, por favor regrese en breve estaremos ingresando información.</p>
+          <a href="{% url 'home' %}" class="btn btn-primary">Inicio</a>
+        </div>
+    </div>
+    {% endif %}
+</main>
+{% endblock content %}
