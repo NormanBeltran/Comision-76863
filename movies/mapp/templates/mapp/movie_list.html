@@ -34,8 +34,8 @@
           </div>
           {% if request.user.is_staff %}
             <div class="card-body">
-                <a href="" class="btn btn-sm btn-primary">Editar</a>
-                <a href="" class="btn btn-sm btn-danger">Eliminar</a>
+                <a href="{% url 'peliculas_update' movie.id %}" class="btn btn-sm btn-primary">Editar</a>
+                <a href="{% url 'peliculas_delete' movie.id %}" class="btn btn-sm btn-danger">Eliminar</a>
             </div>
           {% endif %}
             <div class="card-footer text-muted">

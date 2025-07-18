@@ -1,0 +1,22 @@
+{% extends 'mapp/base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Eliminar una Película
+{% endblock title %}
+    
+
+{% block content %}
+<main role="main">
+    <div class="container">
+        <div class="row mb-5 mt-3">
+            <form action="" method="post">
+                {% csrf_token %}
+                <h2>Esta seguro que quiere eliminar la película "{{ object }}" ?</h2>
+                <input type="submit" class="btn btn-danger" value="Confirmar">
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock content %}

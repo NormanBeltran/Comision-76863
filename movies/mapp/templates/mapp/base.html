@@ -30,14 +30,21 @@
     <!-- Topbar Start -->
     <div class="container-fluid bg-dark">
         <div class="row py-2 px-lg-5">
-            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+            <div class="col-lg-4 text-center text-lg-left mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center text-white">
-                    <small><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</small>
+                    <small><i class="fa fa-phone-alt mr-2"></i>+011 1345 6789</small>
                     <small class="px-3">|</small>
-                    <small><i class="fa fa-envelope mr-2"></i>info@example.com</small>
+                    <small><i class="fa fa-envelope mr-2"></i>josenorman@example.com</small>
                 </div>
             </div>
-            <div class="col-lg-6 text-center text-lg-right">
+            <div class="col-lg-4 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center text-white">
+                {% if user.is_authenticated %}
+                    <i class="fa fa-user mr-2"></i>{{user.first_name}} {{user.last_name}} [{{user}}]
+                {% endif %}                
+                </div>    
+            </div>
+            <div class="col-lg-4 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
                     <a class="text-white px-2" href="">
                         <i class="fab fa-facebook-f"></i>
@@ -78,7 +85,17 @@
                     <a href="{% url 'peliculas' %}" class="nav-item nav-link">Películas</a>
                     <a href="" class="nav-item nav-link">Contactenos</a>
                 </div>
-                <a href="" class="btn btn-primary py-2 px-4 d-none d-lg-block">Login</a>
+                
+                {% if  request.user.is_authenticated %}
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary py-2 px-4 d-none d-lg-block">Logout</button>
+                    </form>                    
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-primary py-2 px-4 d-none d-lg-block">Login</a>
+                {% endif %}
+                    
+                
             </div>
         </nav>
     </div>
@@ -194,6 +211,9 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'mapp/js/main.js' %}"></script>
+    <!-- CKEDITOR Javascript -->
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>    
 </body>
 
 </html>

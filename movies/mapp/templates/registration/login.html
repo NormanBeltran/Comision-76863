@@ -1,0 +1,32 @@
+{%extends 'mapp/base.html'%}
+{% load static %} 
+{%block title %}Login{% endblock %} 
+{%block content%}
+<div class="col-lg-7">
+	<h1 class="mb-4">Ingrese a su cuenta</h1>
+	<div class="contact-form bg-secondary" style="padding: 30px;">
+		<div id="error">
+		    <!-- Mostrar mensajes de error -->
+			{% if messages %}
+			<ul>
+				{% for message in messages %}
+					<li style="color: red;">{{ message }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</div>		
+		<form method="post" class="card" novalidate>
+			{% csrf_token %}
+			<div>
+				<table class="table">	
+					{{ form.as_table}}
+				</table>
+			</div>		
+			<div>
+				<button class="btn btn-primary" type="submit">Ingresar</button>
+			</div>
+		</form>
+		
+	</div>
+</div>
+{%endblock content%} 

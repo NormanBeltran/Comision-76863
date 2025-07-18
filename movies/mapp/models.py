@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib import admin
 from django.utils.html import format_html
+from django.core.exceptions import ValidationError
+
 
 # Create your models here.
 class Gender(models.Model):
@@ -50,6 +52,13 @@ class Movie(models.Model):
 
     def __str__(self):
         return f"{self.name}"    
+    
+    def clean(self):
+        super().clean()
+        if self.premiere < 1900:
+            raise ValidationError("El año de estreno debe ser mayor a 1900")
+        if self.rating > 5:
+            raise ValidationError("Los valores validos son entre 1 y 5")
 
     class Meta:
         verbose_name_plural = "Películas"
